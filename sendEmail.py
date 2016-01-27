@@ -26,6 +26,16 @@ msg = MIMEMultipart()
 msg['From'] = _format_addr('Python大神 <%s>' % from_addr)
 msg['To'] = _format_addr('管理员 <%s>' % to_addr)
 msg['Subject'] = Header('来自SMTP的问候……', 'utf-8').encode()
+#正文
+msg.attach(MIMEText('鸟哥大黄人','plain','utf-8'))
+with open('/Users/CNme/Desktop/login.png','rb') as f:
+    mime = MIMEBase('image','png',filename='login.png')
+    mime.add_header('Content-Disposition','attachment',filename='login.png')
+    mime.add_header('Content-ID','<0>')
+    mime.add_header('X-Attachment-Id','0')
+    mime.set_payload(f.read())
+    encoders.encode_base64(mime)
+    msg.attach(mime)
 
 import smtplib
 server = smtplib.SMTP(smtp_server,587)
